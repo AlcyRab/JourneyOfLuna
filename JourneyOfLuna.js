@@ -71,13 +71,12 @@ window.addEventListener('load', function(){
 
 		update(input, deltaTime, enemies){
 			enemies.forEach(enemy =>{
-				/*if(	this.x+this.width/4 < enemy.x + enemy.width/1.5 &&
-					 	this.x + this.width/2 > enemy.x &&
-					 	this.y+this.height-30 < enemy.y+enemy.height-30 &&
-					 	this.y+this.height-30+this.height-130 > enemy.y){
+				if(		(this.x+this.width/4) < enemy.x + (enemy.width/1.5) &&
+					 	(this.x+this.width/4) + (this.width/2) > enemy.x &&
+					 	(this.y+this.height-30) < (enemy.y+enemy.height-30) + (enemy.height-150) &&
+					 	(this.y+this.height-30) + (this.height-130) > (enemy.y+enemy.height-30)){
 					gameOver = true;
-					console.log(gameOver);
-				}*/
+				}
 
 				if (enemy.y+25 > this.y){
 					this.front = false;
@@ -166,7 +165,6 @@ window.addEventListener('load', function(){
 					} 
 				//Attack();
 				this.width = 100;
-
 				}
 			}
 				
@@ -267,7 +265,6 @@ window.addEventListener('load', function(){
 			this.frameInterval = 1000/this.fps
 			this.speed = 2 + Math.random()*10;
 			this.markedForDeletion = false;
-
 		}
 
 		draw(context){
@@ -333,9 +330,19 @@ window.addEventListener('load', function(){
 		context.fillText("Score: "+ score, 20, 50);
 		context.fillStyle = "white";
 		context.fillText("Score: "+ score, 22, 52);
+
+		if (gameOver) {
+			context.font = "40px Helvetica";
+			context.fillStyle = "black";
+			context.fillText("Game Over!", 300, 100);
+			context.fillStyle = "white";
+			context.fillText("Game Over!", 302, 102);
+
+		}
 	}
 
 	function Attack(enemy){
+		this.image = document.getElementById("playerImage");
 
 	}
 
@@ -365,7 +372,9 @@ window.addEventListener('load', function(){
 		screen.draw(ctx);
 		screen.update();
 
-		requestAnimationFrame(animate);
+		displayStatusText(ctx);
+
+		if(!gameOver) {requestAnimationFrame(animate);}
 	}
 
 	animate(0);
