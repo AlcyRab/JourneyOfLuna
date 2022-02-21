@@ -166,11 +166,9 @@ window.addEventListener('load', function(){
 				//Attack();
 				this.width = 100;
 				}
-			}*/
-				
-			
+			}
 
-			/*if (this.y >= 350 && input.keys.indexOf(" ") > -1){
+			if (this.y >= 350 && input.keys.indexOf(" ") > -1){
 				input.keys.splice(input.keys.indexOf(" "), 1);
 				this.pos = this.y
 				this.vy = -20;
@@ -180,6 +178,7 @@ window.addEventListener('load', function(){
 			if (this.vy < 0 && this.y != this.pos){
 				this.vy += this.gravity;
 			}else */
+
 			if(this.y < 235){
 				this.y = 235;
 			}
