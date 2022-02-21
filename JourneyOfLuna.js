@@ -149,7 +149,7 @@ window.addEventListener('load', function(){
 				this.speedY = 0;
 			}
 
-			if(input.keys.indexOf(" ") > -1){
+			/*if(input.keys.indexOf(" ") > -1){
 				this.frameY = 2;
 				this.frameX = 0;
 				this.width = 150;
@@ -166,7 +166,7 @@ window.addEventListener('load', function(){
 				//Attack();
 				this.width = 100;
 				}
-			}
+			}*/
 				
 			
 
