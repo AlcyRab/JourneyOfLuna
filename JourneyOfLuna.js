@@ -16,6 +16,7 @@ window.addEventListener('load', function(){
 						e.key === "a" ||
 						e.key === "d" ||
 						e.key === "e" ||
+						e.key === "f" ||
 						e.key === " ")
 						&& this.keys.indexOf(e.key) === -1){
 					this.keys.push(e.key);
@@ -27,8 +28,9 @@ window.addEventListener('load', function(){
 						e.key === "w" || 
 						e.key === "a" || 
 						e.key === "d" ||
-						e.key === "e" ||//){
-						e.key === " "){
+						e.key === "e" ){
+						//e.key === "f"){ 
+						//e.key === " "){
 					this.keys.splice(this.keys.indexOf(e.key), 1);
 				}
 			});
@@ -52,10 +54,11 @@ window.addEventListener('load', function(){
 			this.frameInterval = 1000/this.fps
 			this.speedX = 0;
 			this.speedY = 0;
+			//Jump variables and attack
 			this.vy = 0;
 			this.pos = 0;
-			this.gravity = 1;
-			this.front = false;
+			//this.gravity = 1;
+			this.jump = false;
 			this.attack = false;
 		}
 
@@ -76,12 +79,6 @@ window.addEventListener('load', function(){
 					 	(this.y+this.height-30) < (enemy.y+enemy.height-30) + (enemy.height-150) &&
 					 	(this.y+this.height-30) + (this.height-130) > (enemy.y+enemy.height-30)){
 					gameOver = true;
-				}
-
-				if (enemy.y+25 > this.y){
-					this.front = false;
-				}else{
-					this.front = true;
 				}
 			})
 
@@ -149,37 +146,51 @@ window.addEventListener('load', function(){
 				this.speedY = 0;
 			}
 
-			/*if(input.keys.indexOf(" ") > -1){
+			//Trigger Attack
+			if(input.keys.indexOf("f") > -1){
+				if (this.attack == false){this.frameX = 0}
 				this.frameY = 2;
-				this.frameX = 0;
 				this.width = 150;
-				this.fps = 20;
-				//input.keys.splice(input.keys.indexOf(" "), 1);
 				this.attack = true;
-				for(; this.frameX < 3;){
-					if (this.frameTimer > this.frameInterval){
-						this.frameX++;
+
+				if (this.frameTimer > this.frameInterval){
+					if (this.frameX < 3) {this.frameX++}//this.rep = 1;}
+					else {
+						this.frameX = 0;
+						this.frameY = 0;
+						this.attack = false;
+						this.width = 100;
+						input.keys.splice(input.keys.indexOf(" "), 1);
 					}
-					else{
-						this.frameTimer += deltaTime;
-					} 
-				//Attack();
-				this.width = 100;
+					this.frameTimer = 0;
+				}
+
+				else{
+				this.frameTimer += deltaTime;
+				}
+				//Attack();	
+			}
+			
+				 
+
+			//Jump function
+			if (this.jump == false && input.keys.indexOf(" ") > -1){
+				input.keys.splice(input.keys.indexOf(" "), 1);
+				this.pos = this.y;
+				this.vy = -15;
+				this.jump = true;
+			}
+
+			if (this.jump == true && this.y != this.pos){
+				this.vy += 1;
+				if (this.y >= this.pos){
+					this.y = this.pos;
+					this.vy = 0;
+					this.jump = false;
 				}
 			}
 
-			if (this.y >= 350 && input.keys.indexOf(" ") > -1){
-				input.keys.splice(input.keys.indexOf(" "), 1);
-				this.pos = this.y
-				this.vy = -20;
-				this.speedY = 0;
-			} 
-
-			if (this.vy < 0 && this.y != this.pos){
-				this.vy += this.gravity;
-			}else */
-
-			if(this.y < 235){
+			if(this.y < 235 && this.jump == false){
 				this.y = 235;
 			}
 
@@ -340,10 +351,9 @@ window.addEventListener('load', function(){
 		}
 	}
 
-	function Attack(enemy){
+	/*function Attack(){
 		this.image = document.getElementById("playerImage");
-
-	}
+	}*/
 
 	let lastTime = 0;
 	let enemyTimer = 0;
